@@ -10,27 +10,16 @@ import java.util.Scanner;
 import java.util.regex.Pattern;
 
 public class Parse {
-	private static List<String> getRecordFromLine(String line) {
-	    List<String> values = new ArrayList<String>();
-	    try (Scanner rowScanner = new Scanner(line)) {
-	        rowScanner.useDelimiter(",");
-	        while (rowScanner.hasNext()) {
-	            values.add(rowScanner.next());
-	        }
-	    }
-	    return values;
-	}
 	public static void main(String[] args) throws IOException {		
 //       System.out.println("Working Directory = " +
 //               System.getProperty("user.dir"));
 
-		String csvFile = "../dataset/uci/drugsComTest_raw.csv";
+		String csvFile = "../dataset/uci/drugsComTest_raw.txt";
 		BufferedReader br = null;
 		String line = "";
-		String cvsSplitBy = ",";
+		String cvsSplitBy = "\t";
 		int iteration = 0;
 		int c = 0;
-		Pattern p = Pattern.compile(".*\\\"(.*)\\\".*");
 
 		
 
@@ -43,17 +32,19 @@ public class Parse {
             		continue;
             	}
                 // use comma as separator
-            	String review = line.split("\"\"\"")[1].split("\"\"\"")[0];
-//            	for (String string : s) {
-//					System.out.println(string);
-//				}
+//            	String review = line.split("\"\"\"")[1].split("\"\"\"")[0];
+            	String[] drugData = line.split(cvsSplitBy);
+            	for (String string : drugData) {
+					System.out.print(string + " | ");
+				}
+            	System.out.println();
+            	c++;
 //            	System.out.println(s.size());
-//            	System.out.println(line);
-                String[] firstHalf = line.split("\"\"\"")[0].split(cvsSplitBy);
-                String[] secondHalf = line.split("\"\"\"")[2].split(cvsSplitBy);
-                String conditions = line.split("\"")[1].split("\"")[0];
-                System.out.println(c + " Lengths1: "+ firstHalf.length + "Lengths2: " + secondHalf.length);
-               
+//                String[] firstHalf = line.split("\"\"\"")[0].split(cvsSplitBy);
+//                String[] secondHalf = line.split("\"\"\"")[2].split(cvsSplitBy);
+//                String conditions = line.split("\"")[1].split("\"")[0];
+//                System.out.println(c + " Lengths1: "+ firstHalf.length + "Lengths2: " + secondHalf.length);
+            	if(c == 28) break;
                
             }
 
