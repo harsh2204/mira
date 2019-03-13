@@ -26,4 +26,8 @@ public class Drug{
 		this.reviews.add(review);
 		sort.Quick.sortBasicQuick(this.reviews);
 	}	
+	@Override
+	public String toString() {
+		return "Drug [name: " + this.name + " condition: " + this.condition + " score: " + this.score ;
+	}
 }

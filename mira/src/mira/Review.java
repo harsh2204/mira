@@ -38,6 +38,10 @@ public class Review implements Comparable<Review> {
 		return 0;		
 	}
 	
+	@Override
+	public String toString() {
+		return "Review [condition: "+ this.condition + "\trating: "+this.rating+"\tuseful: "+this.useful+"\n\ttext: "+this.review+"\n]";
+	}
 	
 	
 }
