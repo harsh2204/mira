@@ -1,5 +1,7 @@
 package search;
 
+import java.awt.Component;
+
 // Autocomplete - https://stackabuse.com/example-adding-autocomplete-to-jtextfield/
 	
 import java.awt.event.ActionEvent;
@@ -64,12 +66,13 @@ public class Autocomplete implements DocumentListener{
     // Too few chars
     if (pos - w < 2)
       return;
-
+// The edits made to the file only fit the conditions search. If they work properly
+    //we can apply them to the drug names, they need to be tested first.
     String prefix = content.substring(w + 1).toLowerCase();
     Quick.sortBasicQuick(keywords);
     int n = BinarySearch.binarySearch(keywords, prefix);
     if (n < 0 && -n <= keywords.size()) {
-      String match = keywords.get(-n - 1);
+      String match = ((Conditions) keywords.get(-n - 1)).getName();
       if (match.startsWith(prefix)) {
         // A completion is found
         String completion = match.substring(pos - w);
