@@ -1,18 +1,27 @@
 package mira;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.util.EntityUtils;
+import org.json.JSONObject;
+
 public class Review implements Comparable<Review> {
 	//private final String drugName;
 	private final String review;
 	private final float rating;
 	private final String condition;
 	private final int useful;
-	
+	private final double sentiment;
+	private Drug parent;
 	public Review(String review, String condition, float rating, int useful) {
 		this.review = review;
 		this.condition = condition;
 		this.rating = rating;
 		this.useful = useful;
-		
+		this.sentiment = this.getSetimentScore();
 	}
 
 	
@@ -23,7 +32,37 @@ public class Review implements Comparable<Review> {
 	public String getCond() { return this.condition; }
 	
 	public int getUseful() { return this.useful; }
+
+	private double getSetimentScore(int port) {
+		HttpClient httpClient = HttpClientBuilder.create().build(); //Use this instead 
+
+		try {
+			JSONObject json = new JSONObject();
+			json.put("text", this.getReview());  
+
+		    HttpPost request = new HttpPost("http://localhost:"+port);
+		    StringEntity params = new StringEntity(json.toString());
+		    request.addHeader("content-type", "application/json");
+		    request.setEntity(params);
+		    HttpResponse response = httpClient.execute(request);
+		    String json_string = EntityUtils.toString(response.getEntity());
+		    JSONObject temp1 = new JSONObject(json_string);
+		    return (double) temp1.get("polarity");
+		    //handle response here...
+		}catch (Exception ex) {
+		    //handle exception here
+
+		} finally {
+		    //Deprecated
+		    //httpClient.getConnectionManager().shutdown(); 
+		}
+		return 0.0f;	
+	}
 	
+	private double getSetimentScore() {
+//		Default port
+		return this.getSetimentScore(8080);
+	}
 	
 	@Override
 	public int compareTo(Review j)
@@ -40,8 +79,12 @@ public class Review implements Comparable<Review> {
 	
 	@Override
 	public String toString() {
-		return "Review [condition: "+ this.condition + "\trating: "+this.rating+"\tuseful: "+this.useful+"\n\ttext: "+this.review+"\n]";
+		return "Review [condition: "+ this.condition + "\tsentiment: "+this.sentiment+ "\trating: "+this.rating+"\tuseful: "+this.useful+"\n\ttext: "+this.review+"\n]";
 	}
 	
-	
+//	Test code for sentiment stuff
+//	public static void main(String[] args) {
+//		double sentiment = getSetimentScore(8080, "My son is halfway through his fourth week of Intuniv. We became concerned when he began this last week, when he started taking the highest dose he will be on. For two days, he could hardly get out of bed, was very cranky, and slept for nearly 8 hours on a drive home from school vacation (very unusual for him.) I called his doctor on Monday morning and she said to stick it out a few days. See how he did at school, and with getting up in the morning. The last two days have been problem free. He is MUCH more agreeable than ever. He is less emotional (a good thing), less cranky. He is remembering all the things he should. Overall his behavior is better.");
+//		System.out.println(sentiment);
+//	}
 }

@@ -53,7 +53,7 @@ public class Parse {
 //            	}
             	System.out.println(rev);
 //            	System.out.println(review);
-            	if(c == 28) break;
+            	if(c == 10) break;
                
             	c++;
             }

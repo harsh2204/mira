@@ -2,6 +2,17 @@ package mira;
 
 import java.util.ArrayList;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.util.EntityUtils;
+import org.json.JSONObject;
+
+
+
+
 public class Drug{
 
 	private final String name;
@@ -30,4 +41,5 @@ public class Drug{
 	public String toString() {
 		return "Drug [name: " + this.name + " condition: " + this.condition + " score: " + this.score ;
 	}
+
 }
