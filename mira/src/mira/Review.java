@@ -15,6 +15,7 @@ public class Review implements Comparable<Review> {
 	private final String condition;
 	private final int useful;
 	private final double sentiment;
+	private final double srating;
 	private Drug parent;
 	public Review(String review, String condition, float rating, int useful) {
 		this.review = review;
@@ -22,6 +23,12 @@ public class Review implements Comparable<Review> {
 		this.rating = rating;
 		this.useful = useful;
 		this.sentiment = this.getSetimentScore();
+		this.srating = 0.8 * rating + 0.2*useful*this.sentiment;
+//		Formula for final smart rating
+//		sentiment = [-1,1] f
+//		rating = [0,10] int
+//		useful = (0, ♾)
+//		srating = 0.8*rating + 0.2 * useful
 	}
 
 	
@@ -79,7 +86,7 @@ public class Review implements Comparable<Review> {
 	
 	@Override
 	public String toString() {
-		return "Review [condition: "+ this.condition + "\tsentiment: "+this.sentiment+ "\trating: "+this.rating+"\tuseful: "+this.useful+"\n\ttext: "+this.review+"\n]";
+		return "Review [condition: "+ this.condition + "\tsmart_rating: "+this.srating+ "\tsentiment: "+this.sentiment+ "\trating: "+this.rating+"\tuseful: "+this.useful+"\n\ttext: "+this.review+"\n]";
 	}
 	
 //	Test code for sentiment stuff
