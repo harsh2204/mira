@@ -2,18 +2,11 @@ package mira;
 
 import java.util.ArrayList;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.HttpClientBuilder;
-import org.apache.http.util.EntityUtils;
-import org.json.JSONObject;
 
 
 
 
-public class Drug{
+public class Drug implements Comparable<Drug>{
 
 	private final String name;
 	private final String condition;
@@ -41,5 +34,16 @@ public class Drug{
 	public String toString() {
 		return "Drug [name: " + this.name + " condition: " + this.condition + " score: " + this.score ;
 	}
-
+	@Override
+	public int compareTo(Drug j)
+	{
+		//TODO
+		if (this.score < j.score ) {
+			return -1;
+		}
+		else if (this.score  > j.score ) {
+			return 1;
+		}
+		return 0;		
+	}
 }
