@@ -90,20 +90,6 @@ public class mIRa {
 		});
 		btnSubmitQuery.setForeground(new Color(0, 0, 0));
 		btnSubmitQuery.setBounds(279, 141, 180, 29);
-
-		txtEnterTheDrugs = new JTextField();
-		txtEnterTheDrugs.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				JLabel label = new JLabel("Top 3 Drugs:");
-				panel.add(label);
-				frame.setVisible(true);
-				
-				
-			}
-		});
-		txtEnterTheDrugs.setBounds(155, 6, 119, 26);
-		frame.getContentPane().add(txtEnterTheDrugs);
-		txtEnterTheDrugs.setColumns(10);
 		
 		JButton btnSubmitQuery1 = new JButton("submit");
 		btnSubmitQuery.setBounds(157, 34, 117, 29);
