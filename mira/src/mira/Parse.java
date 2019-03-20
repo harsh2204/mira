@@ -1,5 +1,6 @@
 package mira;
 
+import search.BinarySearch;
 import java.io.BufferedReader;
 import org.apache.commons.text.StringEscapeUtils;
 import java.io.FileNotFoundException;
@@ -11,7 +12,6 @@ import java.util.Scanner;
 import java.util.regex.Pattern;
 
 public class Parse {
-	@SuppressWarnings("deprecation")
 	public static void main(String[] args) throws IOException {		
 //       System.out.println("Working Directory = " +
 //               System.getProperty("user.dir"));
@@ -23,7 +23,7 @@ public class Parse {
 
 		int c = 0;
 		
-		
+		List<Condition> conditions = new ArrayList<Condition>();
 
 		try {
 
@@ -38,23 +38,40 @@ public class Parse {
             	review = review.replace("\"\"\"", "");
             	review = StringEscapeUtils.unescapeHtml4(review);
 //            	String cond = drugData[2];
-            	String[] conds = drugData[2].split(",");
+            	String[] conds = drugData[2].replace("\"", "").split(",");
             	String medication = drugData[1];
             	int useful = Integer.parseInt(drugData[6]);
             	int rating = Integer.parseInt(drugData[4]);
-            	Review rev = new Review(review, conds[0], rating, useful);            	
-//            	Review rev;
-//            	if (conds.length == 0) {            		
-//            		rev = new Review(review, conds[0], rating, useful);
-//            	}else {
-//            		for (String cond : conds) {
-//            			rev = new Review(review, cond, rating, useful);
-//					}
-//            	}
-            	System.out.println(rev);
+            	
+            	for (String condition : conds) {
+            		System.out.println("Condition:\t" + condition + "\t|\tTotal:\t"+conditions.size());
+            		int cond_index = BinarySearch.binarySearch_C(conditions, condition);
+            		if(cond_index != -1) {
+//            			The conditions list has the drug entry
+//            			Check for drug in condition
+            			Condition cond = conditions.get(cond_index);
+            			int drug_index = BinarySearch.binarySearch_D(cond.getDrugs(), medication);
+            			if(drug_index != -1) {
+//            				Drug found. Add review to the drug
+            				Drug drug = (Drug) cond.getDrugs().get(drug_index);            				
+            				drug.add(new Review(review, condition, rating, useful));
+            			}else {
+//            				Drug not found. Add drug to condition
+            				Drug new_drug = new Drug(medication, condition);
+            				new_drug.add(new Review(review, condition, rating, useful));            				
+            				cond.add(new_drug);            				
+            			}
+            		}else {
+//            			Condition not found. Make a new condition and add the drug to it.
+            			Drug new_drug = new Drug(medication, condition);
+            			Condition cond = new Condition(condition);
+            			new_drug.add(new Review(review, condition, rating, useful));
+            			cond.add(new_drug);
+            			conditions.add(cond);
+            		}
+            	}            	
 //            	System.out.println(review);
-            	if(c == 10) break;
-               
+            	if(c == 28) break;             
             	c++;
             }
 

@@ -16,7 +16,7 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.text.BadLocationException;
 
-import mira.Conditions;
+import mira.Condition;
 import sort.Quick;
 
 public class Autocomplete implements DocumentListener{
@@ -72,7 +72,7 @@ public class Autocomplete implements DocumentListener{
     Quick.sortBasicQuick(keywords);
     int n = BinarySearch.binarySearch(keywords, prefix);
     if (n < 0 && -n <= keywords.size()) {
-      String match = ((Conditions) keywords.get(-n - 1)).getName();
+      String match = ((Condition) keywords.get(-n - 1)).getName();
       if (match.startsWith(prefix)) {
         // A completion is found
         String completion = match.substring(pos - w);
