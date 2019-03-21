@@ -9,11 +9,11 @@ import mira.Drug;
 public class BinarySearch {
     public static int linSearch_C(List<Condition> arr, String x) 
     { 
-        for(int i =0; i<arr.size(); i++) {
-        	if(arr.get(i).getName() == x) {
+        for(int i=0; i<arr.size(); i++) {        
+        	if(arr.get(i).getName().equals(x)) {
         		return i;
         	}
-        }   
+        }
         return -1;
     }
     public static int binarySearch_D(ArrayList<Comparable> arrayList, String x) 
