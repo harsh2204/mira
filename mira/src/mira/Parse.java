@@ -12,7 +12,7 @@ import java.util.Scanner;
 import java.util.regex.Pattern;
 
 public class Parse {
-	public static void main(String[] args) throws IOException {		
+	public static List<Condition> loadData() throws IOException {		
 //       System.out.println("Working Directory = " +
 //               System.getProperty("user.dir"));
 
@@ -45,7 +45,7 @@ public class Parse {
             	
             	for (String condition : conds) {
             		System.out.println("Condition:\t" + condition + "\t|\tTotal:\t"+conditions.size());
-            		int cond_index = BinarySearch.binarySearch_C(conditions, condition);
+            		int cond_index = BinarySearch.linSearch_C(conditions, condition);
             		if(cond_index != -1) {
 //            			The conditions list has the drug entry
 //            			Check for drug in condition
@@ -73,8 +73,7 @@ public class Parse {
 //            	System.out.println(review);
             	if(c == 28) break;             
             	c++;
-            }
-
+            }            
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -88,7 +87,11 @@ public class Parse {
                 }
             }
         }
+		return conditions;
 
     }
+	public static void main(String[] args) throws IOException {
+		List<Condition> l = loadData();
+	}
 	
 }	

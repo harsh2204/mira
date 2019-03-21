@@ -2,7 +2,7 @@ package mira;
 
 import java.util.ArrayList;
 
-public class Condition {
+public class Condition implements Comparable<Condition>{
 	private final String name;
 	private final ArrayList<Comparable> drugs;
 //	private final ArrayList<Comparable> drugs = new ArrayList<Comparable>();
@@ -21,6 +21,12 @@ public class Condition {
 	public void add(Drug drug) {
 		this.drugs.add(drug);
 //		sort.Quick.sortBasicQuick(this.drugs);
+	}
+
+	@Override
+	public int compareTo(Condition arg0) {
+		// TODO Auto-generated method stub
+		return this.getName().compareTo(arg0.getName());
 	}
 	
 }
