@@ -58,7 +58,6 @@ public class Review implements Comparable<Review> {
 		    //handle response here...
 		}catch (Exception ex) {
 		    //handle exception here
-
 		} finally {
 		    //Deprecated
 		    //httpClient.getConnectionManager().shutdown(); 

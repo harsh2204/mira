@@ -20,18 +20,22 @@ public class Parse {
 	public static List<Condition> loadData() throws IOException {
 //       System.out.println("Working Directory = " +
 //               System.getProperty("user.dir"));
-
+//		String anim = "|/-\\";
+		System.out.println("Started Data Preprocessing");
 		String csvFile = "../dataset/uci/drugsComTest_raw.csv";		
 		List<Condition> conditions = new ArrayList<Condition>();
 		Reader in = new FileReader(csvFile);
 		Iterable<CSVRecord> records = CSVFormat.EXCEL.parse(in);
-		
 		int a = 0;
 		for (CSVRecord record : records) {
+//			System.out.flush();
+//			String data = "\r" + anim.charAt(a % anim.length()) + " " + a;
+//			System.out.write(data.getBytes());
 			if(a == 0) {
 				a++;
 				continue;
 			}
+//			System.out.print("Current record: "+ a);
 			String review = record.get(3);
 			review = review.replace("\"", "");
 			review = StringEscapeUtils.unescapeHtml4(review);//    	
@@ -69,33 +73,35 @@ public class Parse {
 				}
 			}
 			
-			if(a == 100) {
+			if(a == 50) {
 				break;				
 			}
 			a++;
-		}
+//			System.out.print("\b\r");
+		}		
+		System.out.println("Loading done.");
 		return conditions;
-
 	}
 
 	public static void main(String[] args) throws IOException {
-		List<Condition> l = loadData();
-//		for (Condition condition : l) {
-//			System.out.println(condition.getName() +" : "+ condition.getDrugs().size());
-//		}
+		List<Condition> l = loadData();		
+		for (int i = 0; i < l.size(); i++) {
+			Condition condition = l.get(i);
+			System.out.println("["+i+"] "+condition.getName() +" : "+ condition.getDrugs().size());			
+		}
 				
 		
-		Condition first = l.get(5);
-		System.out.println(first.getName() + " | number of drugs : " + first.getDrugs().size());
-		ArrayList<Comparable> weight = first.getDrugs();
-		for (Comparable drug : weight) {
-			System.out.println(((Drug) drug).getName());
-			ArrayList<Comparable> reviews = (((Drug) drug).getReviews());
-			for (Comparable review : reviews) {
-				System.out.println(((Review) review).getReview());				
-			}
-			System.out.println("========================================");
-		}
+//		Condition first = l.get(5);
+//		System.out.println(first.getName() + " | number of drugs : " + first.getDrugs().size());
+//		ArrayList<Comparable> weight = first.getDrugs();
+//		for (Comparable drug : weight) {
+//			System.out.println(((Drug) drug).getName());
+//			ArrayList<Comparable> reviews = (((Drug) drug).getReviews());
+//			for (Comparable review : reviews) {
+//				System.out.println(((Review) review));				
+//			}
+//			System.out.println("========================================");
+//		}
 		
 		
 	}
