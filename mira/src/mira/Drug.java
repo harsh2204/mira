@@ -32,7 +32,7 @@ public class Drug implements Comparable<Drug>{
 	}	
 	@Override
 	public String toString() {
-		return "Drug [name: " + this.name + " condition: " + this.condition + " score: " + this.score ;
+		return "Drug [name: " + this.name + " condition: " + this.condition + " score: " + this.score +" # of reviews: "+this.reviews.size()+"]";
 	}
 	@Override
 	public int compareTo(Drug j)

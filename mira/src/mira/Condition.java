@@ -28,5 +28,8 @@ public class Condition implements Comparable<Condition>{
 		// TODO Auto-generated method stub
 		return this.getName().compareTo(arg0.getName());
 	}
-	
+	@Override
+	public String toString() {
+		return "Condition: "+ this.getName() +" Drugs: "+ this.getDrugs().size();
+	}
 }
