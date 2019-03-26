@@ -64,7 +64,7 @@ public class mIRa {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.getContentPane().setBackground(new Color(204, 153, 153));
+		frame.getContentPane().setBackground(new Color(255, 255, 255));
 		frame.getContentPane().setForeground(new Color(0, 0, 0));
 		frame.setIconImage(Toolkit.getDefaultToolkit().getImage(mIRa.class.getResource("/JavaGUI/resources/pill.png")));
 		frame.setForeground(new Color(0, 0, 0));
