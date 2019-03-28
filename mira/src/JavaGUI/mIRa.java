@@ -1,40 +1,42 @@
 package JavaGUI;
 
+import java.awt.Color;
 import java.awt.EventQueue;
+import java.awt.Font;
+import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.List;
 
+import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import java.awt.BorderLayout;
-import java.awt.Color;
-
-import javax.swing.JTextField;
-import java.awt.FlowLayout;
-import javax.swing.JButton;
-import javax.swing.JMenuBar;
-import javax.swing.JLayeredPane;
-import java.awt.Panel;
 import javax.swing.JTabbedPane;
+import javax.swing.JTextField;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
-import java.awt.Toolkit;
-import javax.swing.JLabel;
-import javax.swing.ImageIcon;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import java.awt.Font;
-
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-
+import mira.Condition;
+import mira.Drug;
+import mira.Parse;
+import search.BinarySearch;
+import search.Trie;
 
 public class mIRa {
 
 	private JFrame frame;
 	private JTextField txtEnterTheDrugs;
 	private JTabbedPane tabbedPane;
-	private JPanel panel;
-	private JTabbedPane tabbedPane_1;
 	private JLabel lblNewLabel;
+	private static Trie t;
+	private static List<Condition> l;
+	private JPanel drugPane;
+	private JPanel reviewPane;
 
 	/**
 	 * Launch the application.
@@ -43,6 +45,14 @@ public class mIRa {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
+					t = new Trie();
+					l = Parse.loadData();
+					for (int i = 0; i < l.size(); i++) {
+						Condition condition = l.get(i);
+//		    			System.out.println("["+i+"] "+condition.getName() +" : "+ condition.getDrugs().size());
+						t.insert(condition.getName());
+					}
+//					List<String> a= t.autocomplete("B");
 					mIRa window = new mIRa();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
@@ -62,6 +72,17 @@ public class mIRa {
 	/**
 	 * Initialize the contents of the frame.
 	 */
+	public static String upperCaseWords(String sentence) {
+        String words[] = sentence.replaceAll("\\s+", " ").trim().split(" ");
+        String newSentence = "";
+        for (String word : words) {
+            for (int i = 0; i < word.length(); i++)
+                newSentence = newSentence + ((i == 0) ? word.substring(i, i + 1).toUpperCase(): 
+                    (i != word.length() - 1) ? word.substring(i, i + 1).toLowerCase() : word.substring(i, i + 1).toLowerCase().toLowerCase() + " ");
+        }
+
+        return newSentence;
+    }
 	private void initialize() {
 		frame = new JFrame();
 		frame.getContentPane().setBackground(new Color(255, 255, 255));
@@ -72,16 +93,92 @@ public class mIRa {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		frame.setBackground(Color.gray);
+
+
+		tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+		tabbedPane.setFont(new Font("Microsoft YaHei Light", Font.PLAIN, 16));
+		tabbedPane.setBounds(15, 180, 707, 365);
+		frame.getContentPane().add(tabbedPane);
+
 		
+		JPanel conditionPane = new JPanel();
+		tabbedPane.addTab("Condition", null, conditionPane, null);
+		conditionPane.setLayout(new BoxLayout(conditionPane, BoxLayout.Y_AXIS));
+		
+		drugPane = new JPanel();
+		tabbedPane.addTab("Drugs", null, drugPane, null);
+		drugPane.setLayout(new BoxLayout(drugPane, BoxLayout.Y_AXIS));
+		
+		reviewPane = new JPanel();
+		tabbedPane.addTab("Reviews", null, reviewPane, null);
+		reviewPane.setLayout(new BoxLayout(reviewPane, BoxLayout.Y_AXIS));
 
 		txtEnterTheDrugs = new JTextField();
+		txtEnterTheDrugs.getDocument().addDocumentListener(new DocumentListener() {
+			// implement the methods
+			public void changedUpdate(DocumentEvent e) {
+				warn();
+			}
+
+			public void removeUpdate(DocumentEvent e) {
+			    warn();
+			}
+
+			public void insertUpdate(DocumentEvent e) {
+			    warn();
+			}
+
+			public void warn() {
+				String search = txtEnterTheDrugs.getText();
+				conditionPane.removeAll();
+				if(search.length() != 0) {
+					if(tabbedPane.getSelectedIndex() != 0) {
+						tabbedPane.setSelectedIndex(0);
+					}
+					search = upperCaseWords(search).trim();
+					List<String> a = t.autocomplete(search);
+					System.out.println("SEARCH: \""+search + "\" Autocomplete Size: "+ a.size());
+					for (String string : a) {
+						JLabel j = new JLabel(string);
+						j.setFont(new Font("Calibri", Font.BOLD, 20));
+						j.addMouseListener(new MouseAdapter()  
+						{  
+						    public void mouseClicked(MouseEvent e)  
+						    {  
+//						    	System.out.println("Clicked: " + string + "!");
+//						    	conditionPane.removeAll();
+						    	tabbedPane.setSelectedIndex(1);
+						    	int index = BinarySearch.linSearch_C(l, string);
+						    	Condition c = l.get(index);
+						    	drugPane.removeAll();
+						    	for (Comparable drug : c.getDrugs()) {
+						    		Drug d = (Drug) drug;
+						    		JLabel k = new JLabel(d.getName());
+									k.setFont(new Font("Calibri", Font.BOLD, 20));
+									drugPane.add(k);
+								}
+						    	drugPane.updateUI();
+						    }  
+						}); 
+						conditionPane.add(j);
+					}
+				}
+				conditionPane.updateUI();
+			}
+		});
+		txtEnterTheDrugs.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				txtEnterTheDrugs.setText("");
+			}
+		});
 		txtEnterTheDrugs.setFont(new Font("Microsoft YaHei Light", Font.PLAIN, 16));
-		txtEnterTheDrugs.setText("enter the drug's name here");
+		txtEnterTheDrugs.setText("Enter the condition here");
 		txtEnterTheDrugs.setForeground(new Color(211, 211, 211));
 		txtEnterTheDrugs.setBounds(15, 85, 707, 40);
 		frame.getContentPane().add(txtEnterTheDrugs);
 		txtEnterTheDrugs.setColumns(10);
-		
+
 		JButton btnSubmitQuery = new JButton("submit");
 		btnSubmitQuery.setFont(new Font("Microsoft YaHei Light", Font.PLAIN, 18));
 		btnSubmitQuery.addActionListener(new ActionListener() {
@@ -90,44 +187,20 @@ public class mIRa {
 		});
 		btnSubmitQuery.setForeground(new Color(0, 0, 0));
 		btnSubmitQuery.setBounds(279, 141, 180, 29);
-		
+
 		JButton btnSubmitQuery1 = new JButton("submit");
 		btnSubmitQuery.setBounds(157, 34, 117, 29);
 
 		frame.getContentPane().add(btnSubmitQuery1);
-		
-		tabbedPane = new JTabbedPane(JTabbedPane.TOP);
-		tabbedPane.setFont(new Font("Microsoft YaHei Light", Font.PLAIN, 16));
-		tabbedPane.setBounds(15, 180, 707, 365);
-		frame.getContentPane().add(tabbedPane);
-		
-		tabbedPane_1 = new JTabbedPane(JTabbedPane.TOP);
-		tabbedPane.addTab("drug info", null, tabbedPane_1, null);
-		
-		panel = new JPanel();
 
-		panel.setBackground(new Color(248, 248, 255));
-		tabbedPane.addTab("reviews", null, panel, null);
-		
 		lblNewLabel = new JLabel("New label");
 		lblNewLabel.setIcon(new ImageIcon(mIRa.class.getResource("/JavaGUI/resources/logo2.PNG")));
 		lblNewLabel.setBounds(279, 0, 180, 69);
 		frame.getContentPane().add(lblNewLabel);
 
-		tabbedPane.addTab("drugs", null, panel, null);
-		
-		tabbedPane_1 = new JTabbedPane(JTabbedPane.TOP);
-		tabbedPane.addTab("reviews", null, tabbedPane_1, null);
-
-		
 	}
 }
 
-
-
-
-
-
 /* TEST CODE FOR GUI */
 /* ................. */
 /* ................. */
@@ -138,19 +211,3 @@ public class mIRa {
 /* ................. */
 /* ................. */
 /* TEST CODE FOR GUI */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

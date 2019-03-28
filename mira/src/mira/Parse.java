@@ -22,7 +22,8 @@ public class Parse {
 //               System.getProperty("user.dir"));
 //		String anim = "|/-\\";
 		System.out.println("Started Data Preprocessing");
-		String csvFile = "../dataset/uci/drugsComTest_raw.csv";		
+		String csvFile = "./dataset/uci/drugsComTest_raw.csv";		
+//		String csvFile = ".\\mira\\dataset\\uci\\drugsComTest_raw.csv";		
 		List<Condition> conditions = new ArrayList<Condition>();
 		Reader in = new FileReader(csvFile);
 		Iterable<CSVRecord> records = CSVFormat.EXCEL.parse(in);
@@ -73,7 +74,7 @@ public class Parse {
 				}
 			}
 			
-			if(a == 50) {
+			if(a == 100) {
 				break;				
 			}
 			a++;
