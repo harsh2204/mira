@@ -16,6 +16,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
@@ -24,6 +25,7 @@ import javax.swing.event.DocumentListener;
 import mira.Condition;
 import mira.Drug;
 import mira.Parse;
+import mira.Review;
 import search.BinarySearch;
 import search.Trie;
 
@@ -156,6 +158,55 @@ public class mIRa {
 						    		JLabel k = new JLabel(d.getName());
 									k.setFont(new Font("Calibri", Font.BOLD, 20));
 									drugPane.add(k);
+									k.addMouseListener(new MouseAdapter()  
+									{  
+									    public void mouseClicked(MouseEvent e)  
+									    {  
+									    	tabbedPane.setSelectedIndex(2);
+									    	for (Comparable review : d.getReviews()) {
+									    		Review r = (Review) review;
+									    		
+									    		String rTitle = "Review:";
+									    		JLabel title = new JLabel(rTitle);
+									    		title.setFont(new Font("Calibri", Font.BOLD, 25));
+									    		reviewPane.add(title);
+									    		
+									    		JLabel l = new JLabel("<html><br/><html>");
+									    		reviewPane.add(l);
+									    		
+									    		String toSay = "The reviwer's experience:";
+									    		JLabel say = new JLabel(toSay);
+									    		say.setFont(new Font("Calibri", Font.BOLD, 21));
+									    		reviewPane.add(say);
+									    		
+					
+									    		reviewPane.add(l);
+									    		
+									    		String toAdd = r.getReview();
+									    		toAdd = "<html>" + toAdd + "<html>";
+									    		JLabel z = new JLabel(toAdd);
+									    		z.setFont(new Font("Calibri", Font.BOLD, 20));
+									    		reviewPane.add(z);
+									    		
+			
+									    		reviewPane.add(l);
+									    		
+									    		String usefulness = "Usefulness:";
+									    		JLabel use = new JLabel(usefulness);
+									    		use.setFont(new Font("Calibri", Font.BOLD, 21));
+									    		reviewPane.add(use);
+									    		
+									    		reviewPane.add(l);
+									    		
+									    		String useful = Integer.toString(r.getUseful());
+									    		JLabel u = new JLabel(useful);
+									    		u.setFont(new Font("Calibri", Font.BOLD, 20));
+									    		reviewPane.add(u);
+									    	}
+									    	reviewPane.updateUI();
+									    }
+									});
+									
 								}
 						    	drugPane.updateUI();
 						    }  
