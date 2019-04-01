@@ -74,7 +74,7 @@ public class Parse {
 				}
 			}
 			
-			if(a == 10) {
+			if(a == 100) {
 				break;				
 			}
 			a++;
@@ -92,17 +92,17 @@ public class Parse {
 		}
 				
 		
-//		Condition first = l.get(5);
-//		System.out.println(first.getName() + " | number of drugs : " + first.getDrugs().size());
-//		ArrayList<Comparable> weight = first.getDrugs();
-//		for (Comparable drug : weight) {
-//			System.out.println(((Drug) drug).getName());
-//			ArrayList<Comparable> reviews = (((Drug) drug).getReviews());
-//			for (Comparable review : reviews) {
-//				System.out.println(((Review) review));				
-//			}
-//			System.out.println("========================================");
-//		}
+		Condition first = l.get(5);
+		System.out.println(first.getName() + " | number of drugs : " + first.getDrugs().size());
+		ArrayList<Comparable> weight = first.getDrugs();
+		for (Comparable drug : weight) {
+			System.out.println(((Drug) drug).getName());
+			ArrayList<Comparable> reviews = (((Drug) drug).getReviews());
+			for (Comparable review : reviews) {
+				System.out.println(((Review) review));				
+			}
+			System.out.println("========================================");
+		}
 		
 		
 	}

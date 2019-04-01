@@ -1,6 +1,7 @@
 package JavaGUI;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.Toolkit;
@@ -28,6 +29,10 @@ import mira.Parse;
 import mira.Review;
 import search.BinarySearch;
 import search.Trie;
+import javax.swing.ScrollPaneConstants;
+import javax.swing.JList;
+import javax.swing.ListSelectionModel;
+import java.awt.GridLayout;
 
 public class mIRa {
 
@@ -38,6 +43,7 @@ public class mIRa {
 	private static Trie t;
 	private static List<Condition> l;
 	private JPanel drugPane;
+	private JScrollPane scrollPane;
 	private JPanel reviewPane;
 
 	/**
@@ -111,8 +117,12 @@ public class mIRa {
 		tabbedPane.addTab("Drugs", null, drugPane, null);
 		drugPane.setLayout(new BoxLayout(drugPane, BoxLayout.Y_AXIS));
 		
+		scrollPane = new JScrollPane();
+		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		tabbedPane.addTab("Reviews", null, scrollPane, null);
+		
 		reviewPane = new JPanel();
-		tabbedPane.addTab("Reviews", null, reviewPane, null);
+		scrollPane.setViewportView(reviewPane);
 		reviewPane.setLayout(new BoxLayout(reviewPane, BoxLayout.Y_AXIS));
 
 		txtEnterTheDrugs = new JTextField();
@@ -162,6 +172,7 @@ public class mIRa {
 									{  
 									    public void mouseClicked(MouseEvent e)  
 									    {  
+									    	reviewPane.removeAll();
 									    	tabbedPane.setSelectedIndex(2);
 									    	for (Comparable review : d.getReviews()) {
 									    		Review r = (Review) review;
@@ -171,8 +182,13 @@ public class mIRa {
 									    		title.setFont(new Font("Calibri", Font.BOLD, 25));
 									    		reviewPane.add(title);
 									    		
-									    		JLabel l = new JLabel("<html><br/><html>");
-									    		reviewPane.add(l);
+									    		JLabel star = new JLabel(""+r.getSrating());
+									    		star.setIcon(new ImageIcon(mIRa.class.getResource("/JavaGUI/resources/gstar.png")));
+									    		star.setAlignmentX(Component.LEFT_ALIGNMENT);
+									    		reviewPane.add(star);
+									    		
+//									    		JLabel l = new JLabel("<html><br><html>");
+//									    		reviewPane.add(l);
 									    		
 									    		String toSay = "The reviwer's experience:";
 									    		JLabel say = new JLabel(toSay);
@@ -180,30 +196,33 @@ public class mIRa {
 									    		reviewPane.add(say);
 									    		
 					
-									    		reviewPane.add(l);
+//									    		reviewPane.add(l);
 									    		
 									    		String toAdd = r.getReview();
-									    		toAdd = "<html>" + toAdd + "<html>";
-									    		JLabel z = new JLabel(toAdd);
+									    		String labelText = String.format("<html><div WIDTH=%d>%s</div></html>", reviewPane.getSize().width - 10, toAdd);
+//									    		toAdd = "<html>" + toAdd + "<html>";
+									    		JLabel z = new JLabel(labelText);
 									    		z.setFont(new Font("Calibri", Font.BOLD, 20));
 									    		reviewPane.add(z);
 									    		
 			
-									    		reviewPane.add(l);
+//									    		reviewPane.add(l);
 									    		
 									    		String usefulness = "Usefulness:";
 									    		JLabel use = new JLabel(usefulness);
 									    		use.setFont(new Font("Calibri", Font.BOLD, 21));
 									    		reviewPane.add(use);
 									    		
-									    		reviewPane.add(l);
+//									    		reviewPane.add(l);
 									    		
 									    		String useful = Integer.toString(r.getUseful());
 									    		JLabel u = new JLabel(useful);
 									    		u.setFont(new Font("Calibri", Font.BOLD, 20));
 									    		reviewPane.add(u);
 									    	}
-									    	reviewPane.updateUI();
+									    	reviewPane.revalidate();
+									    	reviewPane.repaint();
+									    	
 									    }
 									});
 									

@@ -34,12 +34,12 @@ public class Review implements Comparable<Review> {
 	
 	public String getReview() { return this.review; }
 	
-	public float getRating() { return this.rating; }
+	public double getSrating() { return this.srating; }
 	
 	public String getCond() { return this.condition; }
 	
 	public int getUseful() { return this.useful; }
-
+	
 	private double getSetimentScore(int port) {
 		HttpClient httpClient = HttpClientBuilder.create().build(); //Use this instead 
 
