@@ -1,6 +1,5 @@
 # Dataset Download Instructions
 
-Download the following files and make sure they're in this folder.
+Download the following kaggle dataset and extract the two csv's in this folder.
 
-- [drugsComTest_raw.txt](https://file.io/aPyyW5)
-- [drugsComTrain_raw.txt](https://file.io/a6twzd)
+https://www.kaggle.com/jessicali9530/kuc-hackathon-winter-2018
