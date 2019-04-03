@@ -4,22 +4,24 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.EventQueue;
 import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.Toolkit;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
+import java.util.Map;
 
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
@@ -29,13 +31,6 @@ import mira.Parse;
 import mira.Review;
 import search.BinarySearch;
 import search.Trie;
-import javax.swing.ScrollPaneConstants;
-import javax.swing.JList;
-import javax.swing.ListSelectionModel;
-import java.awt.GridLayout;
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
 
 public class mIRa {
 
@@ -44,7 +39,7 @@ public class mIRa {
 	private JTabbedPane tabbedPane;
 	private JLabel lblNewLabel;
 	private static Trie t;
-	private static List<Condition> l;
+	private static Map<String, Condition> l;
 	private JPanel drugPane;
 	private JScrollPane scrollPane;
 	private JPanel reviewPane;
@@ -58,11 +53,10 @@ public class mIRa {
 				try {
 					t = new Trie();
 					l = Parse.loadData();
-					for (int i = 0; i < l.size(); i++) {
-						Condition condition = l.get(i);
-//		    			System.out.println("["+i+"] "+condition.getName() +" : "+ condition.getDrugs().size());
-						t.insert(condition.getName());
-					}
+					for (Map.Entry<String, Condition> entry : l.entrySet()) {
+//		                System.out.println(entry.getKey() + "/" + entry.getValue());
+		                t.insert(entry.getKey());
+		            }
 //					List<String> a= t.autocomplete("B");
 					mIRa window = new mIRa();
 					window.frame.setVisible(true);
@@ -179,9 +173,8 @@ public class mIRa {
 										    {  
 //						    	System.out.println("Clicked: " + string + "!");
 //						    	conditionPane.removeAll();
-										    	tabbedPane.setSelectedIndex(1);
-										    	int index = BinarySearch.linSearch_C(l, string);
-										    	Condition c = l.get(index);
+										    	tabbedPane.setSelectedIndex(1);										    	
+										    	Condition c = l.get(string);
 										    	drugPane.removeAll();
 										    	for (Comparable drug : c.getDrugs()) {
 										    		Drug d = (Drug) drug;

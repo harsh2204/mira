@@ -1,22 +1,21 @@
+from flask import Flask
 from textblob import TextBlob
-import cherrypy
-import logging
+from flask import request, jsonify
+app = Flask(__name__)
 
-class Sentiment(object):
-    def analyze(self, string):
+def analyze(string):
         analysis = TextBlob(string)
         return {'polarity' : analysis.sentiment.polarity}
-    @cherrypy.expose()
-    @cherrypy.tools.json_in()
-    @cherrypy.tools.json_out()
-    @cherrypy.tools.allow(methods=['POST'])
-    def index(self):
-        data = cherrypy.request.json
-        print(data)
-        if(len(data) == 0 or 'text' not in data):
-            raise cherrypy.HTTPError(401, 'Invalid Request Parameters')
-        return self.analyze(data['text'])
-    
-    
+
+@app.route("/hello")
+def hello():
+    return "Hello World!"
+
+@app.route('/', methods=['POST']) #GET requests will be blocked
+def json_example():
+    req_data = request.get_json()
+    text = req_data['text']
+    return jsonify(analyze(text))
+
 if __name__ == "__main__":
-    cherrypy.quickstart(Sentiment(), '/')
+   app.run(debug=False, port=8080) #run app in debug mode on port 5000
