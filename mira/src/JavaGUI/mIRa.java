@@ -10,6 +10,7 @@ import java.awt.Insets;
 import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Map;
 
@@ -190,12 +191,15 @@ public class mIRa {
 													    	for (Comparable review : d.getReviews()) {
 													    		Review r = (Review) review;
 													    		
-													    		String rTitle = "Review:";
+													    		String rTitle = d.getName() + ":";
 													    		JLabel title = new JLabel(rTitle);
-													    		title.setFont(new Font("Calibri", Font.BOLD, 25));
+													    		title.setFont(new Font("Calibri", Font.BOLD, 27));
 													    		reviewPane.add(title);
 													    		
-													    		JLabel star = new JLabel(""+r.getSrating());
+													    	    DecimalFormat df = new DecimalFormat("#.0");
+													    	    String srating = df.format(r.getSrating());
+													    		JLabel star = new JLabel(srating);
+													    		star.setFont(new Font("Calibri", Font.BOLD, 25));
 													    		star.setIcon(new ImageIcon(mIRa.class.getResource("/JavaGUI/resources/gstar.png")));
 													    		star.setAlignmentX(Component.LEFT_ALIGNMENT);
 													    		reviewPane.add(star);
@@ -205,7 +209,7 @@ public class mIRa {
 													    		
 													    		String toSay = "The reviwer's experience:";
 													    		JLabel say = new JLabel(toSay);
-													    		say.setFont(new Font("Calibri", Font.BOLD, 21));
+													    		say.setFont(new Font("Calibri", Font.BOLD, 23));
 													    		reviewPane.add(say);
 													    		
 									
@@ -221,17 +225,17 @@ public class mIRa {
 							
 //									    		reviewPane.add(l);
 													    		
-													    		String usefulness = "Usefulness:";
+													    		/*String usefulness = "Usefulness:";
 													    		JLabel use = new JLabel(usefulness);
 													    		use.setFont(new Font("Calibri", Font.BOLD, 21));
-													    		reviewPane.add(use);
+													    		reviewPane.add(use);*/
 													    		
 //									    		reviewPane.add(l);
 													    		
-													    		String useful = Integer.toString(r.getUseful());
+													    		/*String useful = Integer.toString(r.getUseful());
 													    		JLabel u = new JLabel(useful);
 													    		u.setFont(new Font("Calibri", Font.BOLD, 20));
-													    		reviewPane.add(u);
+													    		reviewPane.add(u);*/
 													    	}
 													    	reviewPane.revalidate();
 													    	reviewPane.repaint();

@@ -23,8 +23,8 @@ public class Parse {
 //       System.out.println("Working Directory = " +
 //               System.getProperty("user.dir"));
 		System.out.println("Started Data Preprocessing");
-		String csvFile = "../dataset/uci/drugsComTest_raw.csv";
-//		String csvFile = "../dataset/uci/drugsComTest_raw.csv";		
+		String csvFile = "./dataset/uci/drugsComTest_raw.csv";
+//		String csvFile = "./dataset/uci/drugsComTest_raw.csv";		
 		Map<String, Condition> conditions = new HashMap<String, Condition>();
 		Reader in = new FileReader(csvFile);
 		Iterable<CSVRecord> records = CSVFormat.EXCEL.parse(in);
