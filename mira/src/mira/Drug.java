@@ -26,9 +26,18 @@ public class Drug implements Comparable<Drug>{
 	
 	public float getScore() { return this.score; }
 	
+	private void updateScore() {
+		float s = 0;
+		for(Comparable r : this.reviews) {
+			Review rev = (Review) r;
+			s += rev.getSrating();
+		}
+		this.score = s/this.reviews.size();
+	}
 	public void add(Review review) {
 		this.reviews.add(review);
 		sort.Quick.sortBasicQuick(this.reviews);
+		this.updateScore();
 	}	
 	@Override
 	public String toString() {

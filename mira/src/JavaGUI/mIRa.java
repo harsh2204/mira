@@ -2,6 +2,7 @@ package JavaGUI;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Cursor;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
@@ -30,7 +31,6 @@ import mira.Condition;
 import mira.Drug;
 import mira.Parse;
 import mira.Review;
-import search.BinarySearch;
 import search.Trie;
 
 public class mIRa {
@@ -167,6 +167,7 @@ public class mIRa {
 									System.out.println("SEARCH: \""+search + "\" Autocomplete Size: "+ a.size());
 									for (String string : a) {
 										JLabel j = new JLabel(string);
+										j.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 										j.setFont(new Font("Calibri", Font.BOLD, 20));
 										j.addMouseListener(new MouseAdapter()  
 										{  
@@ -180,6 +181,7 @@ public class mIRa {
 										    	for (Comparable drug : c.getDrugs()) {
 										    		Drug d = (Drug) drug;
 										    		JLabel k = new JLabel(d.getName());
+										    		k.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 													k.setFont(new Font("Calibri", Font.BOLD, 20));
 													drugPane.add(k);
 													k.addMouseListener(new MouseAdapter()  
