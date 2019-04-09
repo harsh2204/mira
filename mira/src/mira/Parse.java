@@ -74,7 +74,7 @@ public class Parse {
 				}
 			}
 
-			if (a == 100) {
+			if (a == 1000) {
 				break;
 			}
 			a++;

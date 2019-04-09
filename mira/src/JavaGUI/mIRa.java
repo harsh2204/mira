@@ -41,9 +41,12 @@ public class mIRa {
 	private JLabel lblNewLabel;
 	private static Trie t;
 	private static Map<String, Condition> l;
-	private JPanel drugPane;
 	private JScrollPane scrollPane;
 	private JPanel reviewPane;
+	private JScrollPane scrollPane_1;
+	private JPanel drugPane;
+	private JScrollPane scrollPane_2;
+	private JPanel conditionPane;
 
 	/**
 	 * Launch the application.
@@ -101,7 +104,7 @@ public class mIRa {
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[] {650};
 		gridBagLayout.rowHeights = new int[]{69, 40, 40, 365, 0};
-		gridBagLayout.columnWeights = new double[]{0.0, Double.MIN_VALUE};
+		gridBagLayout.columnWeights = new double[]{0.0};
 		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		frame.getContentPane().setLayout(gridBagLayout);
 		
@@ -123,14 +126,21 @@ public class mIRa {
 				gbc_tabbedPane.gridx = 0;
 				gbc_tabbedPane.gridy = 3;
 				frame.getContentPane().add(tabbedPane, gbc_tabbedPane);
-				
 						
-						JPanel conditionPane = new JPanel();
-						tabbedPane.addTab("Condition", null, conditionPane, null);
+						scrollPane_2 = new JScrollPane();
+						scrollPane_2.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+						tabbedPane.addTab("Conditions", null, scrollPane_2, null);
+						
+						conditionPane = new JPanel();
+						scrollPane_2.setViewportView(conditionPane);
 						conditionPane.setLayout(new BoxLayout(conditionPane, BoxLayout.Y_AXIS));
 						
+						scrollPane_1 = new JScrollPane();
+						scrollPane_1.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+						tabbedPane.addTab("Drugs", null, scrollPane_1, null);
+						
 						drugPane = new JPanel();
-						tabbedPane.addTab("Drugs", null, drugPane, null);
+						scrollPane_1.setViewportView(drugPane);
 						drugPane.setLayout(new BoxLayout(drugPane, BoxLayout.Y_AXIS));
 						
 						scrollPane = new JScrollPane();
