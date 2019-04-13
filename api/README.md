@@ -11,4 +11,4 @@ After the virtualenv is setup, install the required packages using pip from `req
 
 `pip3 install -r requirements.txt`
 
-Finally, run `sentiment_api.py` to run a server
+Finally, run `python sentiment_api.py` to run a server

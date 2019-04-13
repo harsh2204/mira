@@ -3,6 +3,7 @@ package mira;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.conn.HttpHostConnectException;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
@@ -83,9 +84,14 @@ public class Review implements Comparable<Review> {
 		    JSONObject temp1 = new JSONObject(json_string);
 		    return (double) temp1.get("polarity");
 		    //handle response here...
-		}catch (Exception ex) {
+		}catch (HttpHostConnectException ex) {
 		    //handle exception here
-		} finally {
+			System.out.println("Server not running! Please run the python server in the api folder");
+			System.out.println("Exiting program!");						
+			System.exit(0);			
+		}catch(Exception ex) {			
+		}
+		finally {
 		    //Deprecated
 		    //httpClient.getConnectionManager().shutdown(); 
 		}
