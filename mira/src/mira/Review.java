@@ -8,6 +8,10 @@ import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONObject;
 
+/**
+ * @author Amrit Pandher
+ *
+ */
 public class Review implements Comparable<Review> {
 	//private final String drugName;
 	private final String review;
@@ -17,6 +21,13 @@ public class Review implements Comparable<Review> {
 	private final double sentiment;
 	private final double srating;
 	private Drug parent;
+	
+	/**
+	 * @param review The review from the data in String format.
+	 * @param condition The condition associated to the review in String format.
+	 * @param rating The rating of the drug from the data.
+	 * @param useful The useful rating from the data.
+	 */
 	public Review(String review, String condition, float rating, int useful) {
 		this.review = review;
 		this.condition = condition;
@@ -32,14 +43,30 @@ public class Review implements Comparable<Review> {
 	}
 
 	
+	/**
+	 * @return The review from the data in String format.
+	 */
 	public String getReview() { return this.review; }
 	
+	/**
+	 * @return The smart rating of the review calculated using our own formula.
+	 */
 	public double getSrating() { return this.srating; }
 	
+	/**
+	 * @return The condition associated to the review in String format.
+	 */
 	public String getCond() { return this.condition; }
 	
+	/**
+	 * @return The useful rating from the data for the drug as an integer.
+	 */
 	public int getUseful() { return this.useful; }
 	
+	/**
+	 * @param port The port needed for the server call.
+	 * @return A sentiment score calculated through a server call.
+	 */
 	private double getSetimentScore(int port) {
 		HttpClient httpClient = HttpClientBuilder.create().build(); //Use this instead 
 
@@ -65,11 +92,17 @@ public class Review implements Comparable<Review> {
 		return 0.0f;	
 	}
 	
+	/**
+	 * @return Gets the sentiment score for the particular review.
+	 */
 	private double getSetimentScore() {
 //		Default port
 		return this.getSetimentScore(8080);
 	}
 	
+	/**
+	 * @brief Compares two reviews based on score.
+	 */ 
 	@Override
 	public int compareTo(Review j)
 	{
@@ -83,6 +116,9 @@ public class Review implements Comparable<Review> {
 		return 0;		
 	}
 	
+	/**
+	 * @brief Gives the reviews details in String format, includes the various ratings.
+	 */
 	@Override
 	public String toString() {
 		return "Review [condition: "+ this.condition + "\tsmart_rating: "+this.srating+ "\tsentiment: "+this.sentiment+ "\trating: "+this.rating+"\tuseful: "+this.useful+"\n\ttext: "+this.review+"\n]";

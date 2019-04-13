@@ -18,12 +18,20 @@ import java.util.Map;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
+/**
+ * @author Harsh Gupta and Navroop Singh
+ *
+ */
 public class Parse {
+	/**
+	 * @return Reads the data to map a string in the CSV data file to a condition.
+	 * @throws IOException
+	 */
 	public static Map<String, Condition> loadData() throws IOException {
 //       System.out.println("Working Directory = " +
 //               System.getProperty("user.dir"));
 		System.out.println("Started Data Preprocessing");
-		String csvFile = "../dataset/uci/drugsComTest_raw.csv";
+		String csvFile = "./dataset/uci/drugsComTest_raw.csv";
 //		String csvFile = "./dataset/uci/drugsComTest_raw.csv";		
 		Map<String, Condition> conditions = new HashMap<String, Condition>();
 		Reader in = new FileReader(csvFile);
