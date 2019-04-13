@@ -1,3 +1,8 @@
+/**
+ * @author Harsh Gupta, Amrit Pandher, and Navroop Singh
+ *
+ */
+
 package JavaGUI;
 
 import java.awt.Color;
