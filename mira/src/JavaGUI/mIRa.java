@@ -79,7 +79,8 @@ public class mIRa {
 	}
 
 	/**
-	 * Initialize the contents of the frame.
+	 * @param sentence takes in a sentence and splits it into seperate words
+	 * @return A seperated sentence
 	 */
 	public static String upperCaseWords(String sentence) {
         String words[] = sentence.replaceAll("\\s+", " ").trim().split(" ");
@@ -92,11 +93,16 @@ public class mIRa {
 
         return newSentence;
     }
+	
+	
+	/**
+	 * Start the frame and place contents in the frame
+	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.getContentPane().setBackground(new Color(246, 241, 208));
+		frame.getContentPane().setBackground(new Color(246, 241, 208)); //setting color
 		frame.getContentPane().setForeground(new Color(0, 0, 0));
-		frame.setIconImage(Toolkit.getDefaultToolkit().getImage(mIRa.class.getResource("/JavaGUI/resources/pill.png")));
+		frame.setIconImage(Toolkit.getDefaultToolkit().getImage(mIRa.class.getResource("/JavaGUI/resources/pill.png"))); //import image
 		frame.setForeground(new Color(0, 0, 0));
 		frame.setBounds(150, 150, 759, 639);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -126,6 +132,7 @@ public class mIRa {
 				gbc_tabbedPane.gridx = 0;
 				gbc_tabbedPane.gridy = 3;
 				frame.getContentPane().add(tabbedPane, gbc_tabbedPane);
+					//add different panels
 						
 						scrollPane_2 = new JScrollPane();
 						scrollPane_2.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
@@ -173,7 +180,7 @@ public class mIRa {
 										tabbedPane.setSelectedIndex(0);
 									}
 									search = upperCaseWords(search).trim();
-									List<String> a = t.autocomplete(search);
+									List<String> a = t.autocomplete(search); //autocomplete the word
 									System.out.println("SEARCH: \""+search + "\" Autocomplete Size: "+ a.size());
 									for (String string : a) {
 										JLabel j = new JLabel(string);
@@ -197,7 +204,7 @@ public class mIRa {
 													k.addMouseListener(new MouseAdapter()  
 													{  
 													    public void mouseClicked(MouseEvent e)  
-													    {  
+													    {  // displaying reviews
 													    	reviewPane.removeAll();
 													    	tabbedPane.setSelectedIndex(2);
 													    	for (Comparable review : d.getReviews()) {
@@ -286,13 +293,3 @@ public class mIRa {
 	}
 }
 
-/* TEST CODE FOR GUI */
-/* ................. */
-/* ................. */
-/* ................. */
-/* ................. */
-/* ................. */
-/* ................. */
-/* ................. */
-/* ................. */
-/* TEST CODE FOR GUI */
