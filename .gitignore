@@ -1,3 +1,4 @@
 /api/sentiment
 /bin/
 /mira/bin/
+*.csv
